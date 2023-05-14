@@ -166,14 +166,54 @@
   <!-- v-model 结束 -->
 
   <!-- 自定义指令开始 -->
-
-  <div>
+  <!-- <div>
     <button @click="flag = !flag">切换</button>
     <vDirective v-if="flag" v-move:test1.test2="{ background: 'cyan' }"></vDirective>
-  </div>
-
-
+  </div> -->
   <!-- 自定义指令结束 -->
+
+  <!-- 指令简写 开始 按钮级别的权限-->
+
+
+  <!-- <div>
+    <button v-has-show="'shop:edit'">创建</button>
+    <button v-has-show="'shop:create'">编辑</button>
+    <button v-has-show="'shop:delete'">删除</button>
+  </div> -->
+  <!-- 拖动案例 -->
+  <!-- <div v-move class="box">
+    <div class="header"></div>
+    <div>内容</div>
+  </div> -->
+
+  <!-- 图片懒加载 -->
+  <!-- <div>
+    <img v-for="item in arr" v-lazy="item" width="360" height="500">
+  </div> -->
+  <!-- 指令简写 结束-->
+
+  <!-- 自定义hooks 开始 -->
+  <!-- <div> -->
+  <!-- <img id="img" src="./assets/logo.png"> -->
+  <!-- <A name="tom" title="123"></A> -->
+  <!-- </div> -->
+  <!-- 自定义hooks 结束 -->
+
+
+  <!-- 全局函数和变量开始 -->
+
+  <!-- <div>{{ $tom }}</div>
+  <div>{{ $filters.format("test") }}</div> -->
+
+  <!-- 全局函数和变量结束 -->
+
+  <!-- 样式穿透开始 -->
+  <!-- <StyleDeep></StyleDeep> -->
+  <!-- 样式穿透结束 -->
+
+  <!-- 函数式编程 h函数开始 -->
+  <H></H>
+  <!-- 函数式编程 h函数结束 -->
 </template>
 
 <script setup lang="ts">
@@ -188,16 +228,20 @@
 // import C from './components/dynamic/C.vue';
 // import Dialog from "./components/slot/Dialog/index.vue"
 // import Tom from './App'
-import TransitionIndex from "./components/transition/index.vue"
 // import TransitionIndex from "./components/transition/index.vue"
-import loading from "./components/suspense/loading.vue";
-import sync from "./components/suspense/sync.vue";
-import provideA from "./components/ProvideInject/provideA.vue";
-import A from "./components/props/A.vue";
-import B from "./components/props/B.vue";
-import vModelVue from "./components/vmodel/index.vue"
-import vDirective from "./components/directive/index.vue"
-import { Directive, provide, defineAsyncComponent, ref, shallowRef, triggerRef, customRef, reactive, toRef, toRefs, toRaw, markRaw, readonly, isShallow, DirectiveBinding } from 'vue';
+// import TransitionIndex from "./components/transition/index.vue"
+// import loading from "./components/suspense/loading.vue";
+// import sync from "./components/suspense/sync.vue";
+// import provideA from "./components/ProvideInject/provideA.vue";
+// import A from "./components/props/A.vue";
+// import B from "./components/props/B.vue";
+// import vModelVue from "./components/vmodel/index.vue"
+// import vDirective from "./components/directive/index.vue"
+// import A from './components/hooks/index.vue';
+// import useBase64 from "./components/hooks/index";
+// import StyleDeep from "./components/styledeep/index.vue"
+import H from "./components/h/index.vue"
+import { getCurrentInstance, Directive, provide, defineAsyncComponent, ref, shallowRef, triggerRef, customRef, reactive, toRef, toRefs, toRaw, markRaw, readonly, isShallow, DirectiveBinding } from 'vue';
 import type { Ref } from 'vue';
 // const a: string = "<span style='color:red'>我是一段文字</span>"
 
@@ -429,40 +473,129 @@ const lifeCicleFlag = ref<Boolean>(true);
 //   // 绑定元素的父组件卸载后调用
 //   unmounted(el, binding, vnode, prevVnode) {}
 // } 常用 mounted  updated unmounted
-let flag = ref<boolean>(true);
-type Dir = {
-  background: string
-}
-const vMove: Directive = {
-  created() {// 元素初始化的时候
-    console.log("created");
-  },
-  beforeMount() {// 指令绑定到元素后调用 只调用一次
-    console.log("beforeMount");
-  },
-  // mounted(...args) { // 元素插入父级dom调用
-  mounted(el: HTMLElement, dir: DirectiveBinding<Dir>) { // 元素插入父级dom调用
-    console.log("mounted");
-    // console.log(dir.value.background);
-    el.style.background = dir.value.background;
+// let flag = ref<boolean>(true);
+// type Dir = {
+//   background: string
+// }
+// const vMove: Directive = {
+//   created() {// 元素初始化的时候
+//     console.log("created");
+//   },
+//   beforeMount() {// 指令绑定到元素后调用 只调用一次
+//     console.log("beforeMount");
+//   },
+//   // mounted(...args) { // 元素插入父级dom调用
+//   mounted(el: HTMLElement, dir: DirectiveBinding<Dir>) { // 元素插入父级dom调用
+//     console.log("mounted");
+//     // console.log(dir.value.background);
+//     el.style.background = dir.value.background;
 
-  },
-  beforeUpdate() { // 元素被更新之前调用
+//   },
+//   beforeUpdate() { // 元素被更新之前调用
 
-    console.log("beforeUpdate");
-  },
-  updated() { // 更新后调用
-    console.log("updated");
-  },
-  beforeUnmount() { // 元素被移除前调用
-    console.log("beforeUnmount");
-  },
-  unmounted() { // 指令被移除后调用 只调用一次
-    console.log("unmounted");
-  }
-}
+//     console.log("beforeUpdate");
+//   },
+//   updated() { // 更新后调用
+//     console.log("updated");
+//   },
+//   beforeUnmount() { // 元素被移除前调用
+//     console.log("beforeUnmount");
+//   },
+//   unmounted() { // 指令被移除后调用 只调用一次
+//     console.log("unmounted");
+//   }
+// }
 
 // 自定义指令结束
+
+
+// 指令简写 开始
+
+// localStorage.setItem('userId', 'tom')
+// const permission = [
+//   'tom:shop:edit',
+//   'tom:shop:create',
+//   'tom:shop:delete',
+// ];
+// const userId = localStorage.getItem('userId');
+// const vHasShow: Directive<HTMLElement, string> = (el, binding) => {
+//   console.log("vHasShow", el, binding);
+//   if (!permission.includes(userId + ":" + binding.value)) {
+//     el.style.display = "none";
+//   }
+// }
+
+// 拖动案例指令
+
+// const vMove: Directive<any, void> = (el: HTMLElement, binding: DirectiveBinding) => {
+//   let moveElement: HTMLDivElement = el.firstElementChild as HTMLDivElement;
+//   console.log(moveElement);
+//   const mouseDown = (e: MouseEvent) => {
+//     let x = e.clientX - el.offsetLeft;
+//     let y = e.clientY - el.offsetTop;
+//     const move = (e: MouseEvent) => {
+//       el.style.left = e.clientX - x + "px";
+//       el.style.top = e.clientY - y + "px";
+//     }
+//     document.addEventListener("mousemove", move)
+//     document.addEventListener("mouseup", () => {
+//       document.removeEventListener("mousemove", move)
+//     })
+
+//   }
+//   moveElement.addEventListener('mousedown', mouseDown);
+
+// }
+
+// 图片懒加载
+// glob 懒加载模式 globEager静态加载
+// const imageList: Record<string, { default: string }> = import.meta.glob("./assets/images/*.*", { eager: true });
+// let arr = Object.values(imageList).map(item => item.default)
+// console.log(arr);
+
+// const vLazy: Directive<HTMLImageElement, string> = async (el, binding) => {
+//   const def = await import("./assets/logo.png")
+//   // console.log(el);
+//   el.src = def.default;
+//   const observer = new IntersectionObserver((enr) => {
+//     // console.log(enr[0], binding);
+//     if (enr[0].intersectionRatio > 0) {
+//       setTimeout(() => {// 延迟加载看效果
+//         el.src = binding.value;
+//       }, 2000);
+//       observer.unobserve(el); // 加载完成后解绑
+//     }
+//   })
+
+//   observer.observe(el);
+// }
+// 指令简写 结束
+
+// 自定义hooks 开始
+// useBase64({
+//   el: "#img"
+// }).then(res => {
+//   console.log(res.baseUrl);
+// })
+// 自定义hooks 结束
+
+// 全局函数和变量开始
+// const app = getCurrentInstance();
+// console.log(app?.proxy?.$filters.format("test"));
+// 全局函数和变量结束
+
+// vue插件开始
+// const instance = getCurrentInstance();
+// console.log("instance", instance);
+
+// // instance?.proxy.$myloading.show();
+// instance?.proxy?.$myloading.show();
+
+// setTimeout(() => {
+//   instance?.proxy?.$myloading.hide();
+
+// }, 5000);
+// vue插件结束
 </script>
 
 
@@ -491,4 +624,20 @@ span {
 //   border: 1px solid #ccc;
 //   background-color: v-bind(colorVal);
 // }
+
+.box {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid black;
+
+  .header {
+    height: 20px;
+    background-color: black;
+    cursor: move;
+  }
+}
 </style>
